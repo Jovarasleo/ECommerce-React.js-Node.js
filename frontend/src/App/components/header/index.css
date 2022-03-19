@@ -1,0 +1,10 @@
+.navbar {
+  min-height: 80px;
+  width: 100%;
+  background: rgb(135, 135, 135);
+  background: linear-gradient(
+    90deg,
+    rgba(135, 135, 135, 1) 28%,
+    rgba(0, 104, 144, 1) 79%
+  );
+}

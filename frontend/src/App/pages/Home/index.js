@@ -1,35 +1,32 @@
-import React, { useEffect } from "react";
-import { connect, useSelector } from "react-redux";
-import { fetchItems } from "../../content/items/itemActions";
-
-function Home({ fetchItems, itemsData }) {
-  useEffect(async () => {
-    fetchItems();
-  }, []);
-  console.log(itemsData, itemsData.items);
-  return itemsData.loading ? (
+import React, { useCallback, useEffect } from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { fetchItems } from "../../content/itemActions";
+import ItemCard from "../../components/itemCard/index.tsx";
+import content from "../../content";
+function Home() {
+  const dispatch = useDispatch();
+  const items = useSelector((state) => content.selectors.getItems(state));
+  useEffect(() => {
+    dispatch(content.actions.getItems());
+    console.log("items", items);
+  }, [dispatch]);
+  return items?.loading ? (
     <h2>loading</h2>
-  ) : itemsData.error ? (
+  ) : items?.error ? (
     <h2>error</h2>
   ) : (
     <div>
-      <h2>Items</h2>
-      <div>
-        {itemsData.items &&
-          itemsData.items.map((item) => <p key={item.id}>{item.name}</p>)}
-      </div>
+      {items.map((item) => {
+        return (
+          <ItemCard
+            key={item.id}
+            title={item.name}
+            price={item.price}
+          ></ItemCard>
+        );
+      })}
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    itemsData: state.items,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchItems: () => dispatch(fetchItems()),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

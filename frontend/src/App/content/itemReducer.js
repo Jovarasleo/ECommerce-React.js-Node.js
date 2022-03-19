@@ -1,8 +1,4 @@
-import {
-  FETCH_ITEMS_FAILURE,
-  FETCH_ITEMS_REQUEST,
-  FETCH_ITEMS_SUCCESS,
-} from "./itemTypes";
+import * as types from "./itemTypes";
 
 const initialState = {
   loading: false,
@@ -11,18 +7,21 @@ const initialState = {
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_ITEMS_REQUEST:
+    case types.FETCH_ITEMS_REQUEST:
+      console.log("request reducer");
       return {
         ...state,
         loading: true,
       };
-    case FETCH_ITEMS_SUCCESS:
+    case types.FETCH_ITEMS_SUCCESS:
+      console.log("success reducer", action.payload);
       return {
         loading: false,
         items: action.payload,
         error: "",
       };
-    case FETCH_ITEMS_FAILURE:
+    case types.FETCH_ITEMS_FAILURE:
+      console.log("failure reducer");
       return {
         loading: false,
         items: [],

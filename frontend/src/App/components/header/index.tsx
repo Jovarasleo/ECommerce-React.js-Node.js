@@ -1,6 +1,7 @@
+import "./index.css";
 function Header() {
   return (
-    <div>
+    <div className="navbar">
       <nav>NAVBAR</nav>
     </div>
   );
